@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://xhclokgqktwc"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_kim6n"]
+[ext_resource type="PackedScene" uid="uid://b7p7ft3uhdk1t" path="res://scenes/player.tscn" id="2_ql2pw"]
+[ext_resource type="PackedScene" uid="uid://bkxw67ur02j8m" path="res://scenes/cursor.tscn" id="3_b5271"]
+[ext_resource type="PackedScene" uid="uid://cuxf6nlfsmh7n" path="res://scenes/ship_cursor.tscn" id="6_t74q6"]
+[ext_resource type="PackedScene" uid="uid://bci0fkk2sypoe" path="res://scenes/hud.tscn" id="6_tbi74"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_kim6n")
+ship_cursor_scene = ExtResource("6_t74q6")
+
+[node name="HUD" parent="." instance=ExtResource("6_tbi74")]
+metadata/_edit_lock_ = true
+
+[node name="Player1" parent="." instance=ExtResource("2_ql2pw")]
+unique_name_in_owner = true
+
+[node name="Player2" parent="." instance=ExtResource("2_ql2pw")]
+unique_name_in_owner = true
+visible = false
+
+[node name="RadarGrid" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+offset_left = 53.0
+offset_top = 128.0
+offset_right = 576.0
+offset_bottom = 648.0
+border_width = 0.0
+metadata/_edit_lock_ = true
+
+[node name="RadarCursor" parent="RadarGrid" node_paths=PackedStringArray("RectContainer") instance=ExtResource("3_b5271")]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0.462745, 0.462745, 0.462745, 1)
+position = Vector2(1, 0)
+scale = Vector2(1.625, 1.625)
+RectContainer = NodePath("..")
+metadata/_edit_lock_ = true
+
+[node name="OceanGrid" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+offset_left = 629.0
+offset_top = 128.0
+offset_right = 1152.0
+offset_bottom = 648.0
+border_width = 0.0
+metadata/_edit_lock_ = true
+
+[connection signal="pulsed" from="RadarGrid/RadarCursor" to="." method="_on_radar_cursor_pulsed"]
